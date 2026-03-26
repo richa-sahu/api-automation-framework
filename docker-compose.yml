@@ -1,0 +1,9 @@
+services:
+  tests:
+    build: .
+    container_name: api-test-runner
+    volumes:
+      - ./reports:/app/reports
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
