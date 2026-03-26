@@ -1,6 +1,6 @@
 # API Automation Framework
 
-![CI](https://github.com/richa-sahu/api-automation-framework/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/richa-sahu/api-automation-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/richa-sahu/api-automation-framework/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.11-blue)
 ![Pytest](https://img.shields.io/badge/pytest-7.4.0-green)
 ![Allure](https://img.shields.io/badge/allure-2.13.2-orange)
