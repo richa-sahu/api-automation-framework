@@ -1,6 +1,12 @@
 import allure
 import pytest
+import os
+from dotenv import load_dotenv
 from helpers.helpers import generate_booking_payload
+
+load_dotenv()
+BASE_URL = os.getenv("BASE_URL", "https://restful-booker.herokuapp.com")
+
 
 @allure.feature("Booking")
 class TestBookingPositive:
@@ -69,7 +75,6 @@ class TestBookingPositive:
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.regression
     def test_delete_booking(self, booking_client):
-        # Create a fresh one just to delete it
         payload = generate_booking_payload()
         create_resp = booking_client.create_booking(payload)
         booking_id = create_resp.json()["bookingid"]
@@ -96,7 +101,7 @@ class TestBookingNegative:
     @pytest.mark.negative
     def test_update_booking_no_auth(self, created_booking):
         from src.booking import BookingClient
-        unauthenticated_client = BookingClient("https://restful-booker.herokuapp.com")
+        unauthenticated_client = BookingClient(BASE_URL)
         booking_id, payload = created_booking
         response = unauthenticated_client.update_booking(booking_id, payload)
         assert response.status_code == 403
@@ -106,7 +111,7 @@ class TestBookingNegative:
     @pytest.mark.negative
     def test_delete_booking_no_auth(self, created_booking):
         from src.booking import BookingClient
-        unauthenticated_client = BookingClient("https://restful-booker.herokuapp.com")
+        unauthenticated_client = BookingClient(BASE_URL)
         booking_id, _ = created_booking
         response = unauthenticated_client.delete_booking(booking_id)
         assert response.status_code == 403
@@ -124,7 +129,6 @@ class TestBookingParametrized:
         ("Alice", "Brown"),
     ])
     def test_get_bookings_by_name_filter(self, booking_client, firstname, lastname):
-        # First create a booking with known names
         payload = generate_booking_payload(firstname=firstname, lastname=lastname)
         booking_client.create_booking(payload)
 
